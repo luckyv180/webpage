@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Brand, Platform } from '@/types';
+import { Platform } from '@/types';
 import { useProducts } from '@/context/ProductContext';
 
 export type SortOption = 'default' | 'commission-high' | 'commission-low' | 'price-high' | 'price-low';
@@ -10,7 +10,7 @@ export type PriceRange = 'all' | 'under200' | '200to500' | '500to1000' | 'above1
 export interface FilterState {
     sort: SortOption;
     priceRange: PriceRange;
-    brands: Brand[];
+    brands: string[];
     platforms: Platform[];
 }
 
@@ -73,7 +73,7 @@ export default function FilterModal({ isOpen, onClose, filters, onApply }: Filte
         setLocalFilters(prev => ({ ...prev, priceRange }));
     };
 
-    const handleBrandToggle = (brand: Brand) => {
+    const handleBrandToggle = (brand: string) => {
         setLocalFilters(prev => ({
             ...prev,
             brands: prev.brands.includes(brand)
@@ -204,12 +204,12 @@ export default function FilterModal({ isOpen, onClose, filters, onApply }: Filte
                                 {allBrands.map((brand) => (
                                     <button
                                         key={brand}
-                                        onClick={() => handleBrandToggle(brand as Brand)}
+                                        onClick={() => handleBrandToggle(brand)}
                                         className="flex items-center gap-2.5 px-2 py-2.5 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors w-full text-left"
                                     >
-                                        <div className={`w-[16px] h-[16px] rounded border flex items-center justify-center shrink-0 transition-colors ${localFilters.brands.includes(brand as Brand) ? 'bg-[#EE4D37] border-[#EE4D37]' : 'border-gray-300'
+                                        <div className={`w-[16px] h-[16px] rounded border flex items-center justify-center shrink-0 transition-colors ${localFilters.brands.includes(brand) ? 'bg-[#EE4D37] border-[#EE4D37]' : 'border-gray-300'
                                             }`}>
-                                            {localFilters.brands.includes(brand as Brand) && (
+                                            {localFilters.brands.includes(brand) && (
                                                 <svg className="w-2.5 h-2.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
                                                 </svg>

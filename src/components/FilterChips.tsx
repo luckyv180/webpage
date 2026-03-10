@@ -9,9 +9,7 @@ interface FilterChipsProps {
 
 const filters: { id: QuickFilter; label: string }[] = [
     { id: 'highest', label: 'Highest Commission' },
-    { id: 'trending', label: 'Trending' },
     { id: 'above10', label: 'Commission > 10%' },
-    { id: 'recent', label: 'Recently Updated' },
 ];
 
 export default function FilterChips({ activeFilters, onToggle }: FilterChipsProps) {

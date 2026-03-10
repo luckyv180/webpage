@@ -93,8 +93,8 @@ export default function Home() {
     // Highest commission quick filter — sort by max commission
     if (highestCommission) {
       result.sort((a, b) => {
-        const aMax = Math.max(...a.platforms.map(p => p.commission));
-        const bMax = Math.max(...b.platforms.map(p => p.commission));
+        const aMax = Math.max(...a.platforms.map(p => p.commission + p.extraCommission));
+        const bMax = Math.max(...b.platforms.map(p => p.commission + p.extraCommission));
         return bMax - aMax;
       });
     }
@@ -103,15 +103,15 @@ export default function Home() {
     switch (filters.sort) {
       case 'commission-high':
         result.sort((a, b) => {
-          const aMax = Math.max(...a.platforms.map(p => p.commission));
-          const bMax = Math.max(...b.platforms.map(p => p.commission));
+          const aMax = Math.max(...a.platforms.map(p => p.commission + p.extraCommission));
+          const bMax = Math.max(...b.platforms.map(p => p.commission + p.extraCommission));
           return bMax - aMax;
         });
         break;
       case 'commission-low':
         result.sort((a, b) => {
-          const aMax = Math.max(...a.platforms.map(p => p.commission));
-          const bMax = Math.max(...b.platforms.map(p => p.commission));
+          const aMax = Math.max(...a.platforms.map(p => p.commission + p.extraCommission));
+          const bMax = Math.max(...b.platforms.map(p => p.commission + p.extraCommission));
           return aMax - bMax;
         });
         break;

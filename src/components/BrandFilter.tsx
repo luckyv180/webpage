@@ -1,11 +1,10 @@
 'use client';
 
-import { Brand } from '@/types';
 import { useProducts } from '@/context/ProductContext';
 
 interface BrandFilterProps {
-    selectedBrands: Brand[];
-    onToggle: (brand: Brand) => void;
+    selectedBrands: string[];
+    onToggle: (brand: string) => void;
 }
 
 export default function BrandFilter({ selectedBrands, onToggle }: BrandFilterProps) {
@@ -13,11 +12,11 @@ export default function BrandFilter({ selectedBrands, onToggle }: BrandFilterPro
     return (
         <div className="flex gap-2.5 overflow-x-auto hide-scrollbar pb-1">
             {allBrands.map((brand) => {
-                const isActive = selectedBrands.includes(brand as Brand);
+                const isActive = selectedBrands.includes(brand);
                 return (
                     <button
                         key={brand}
-                        onClick={() => onToggle(brand as Brand)}
+                        onClick={() => onToggle(brand)}
                         className={`filter-pill ${isActive ? 'active' : ''}`}
                     >
                         {brand}

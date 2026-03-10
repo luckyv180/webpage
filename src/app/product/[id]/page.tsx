@@ -31,10 +31,10 @@ export default function ProductDetail({ params }: PageProps) {
         );
     }
 
-    const bestPlatform = [...product.platforms].sort((a, b) => b.commission - a.commission)[0];
+    const bestPlatform = [...product.platforms].sort((a, b) => (b.commission + b.extraCommission) - (a.commission + a.extraCommission))[0];
 
     // Filter platforms if context was passed from homepage
-    let sortedPlatforms = [...product.platforms].sort((a, b) => b.commission - a.commission);
+    let sortedPlatforms = [...product.platforms].sort((a, b) => (b.commission + b.extraCommission) - (a.commission + a.extraCommission));
     if (platformFilter && sortedPlatforms.some(p => p.platform === platformFilter)) {
         sortedPlatforms = sortedPlatforms.filter(p => p.platform === platformFilter);
     }
@@ -94,11 +94,12 @@ export default function ProductDetail({ params }: PageProps) {
                                 {sortedPlatforms.map((p) => {
                                     const isBest = p.platform === bestPlatform.platform;
                                     const meta = platformMeta[p.platform];
-                                    const totalEarning = Math.round(p.price * p.commission / 100);
-                                    const extraCommPercent = p.commission > 5 ? 5 : 0;
-                                    const platformCommPercent = p.commission - extraCommPercent;
+                                    const platformCommPercent = p.commission;
+                                    const extraCommPercent = p.extraCommission;
+                                    const totalCommPercent = platformCommPercent + extraCommPercent;
                                     const platformCommAmount = Math.round(p.price * platformCommPercent / 100);
                                     const extraCommAmount = Math.round(p.price * extraCommPercent / 100);
+                                    const totalEarning = platformCommAmount + extraCommAmount;
 
                                     return (
                                         <div
@@ -146,7 +147,7 @@ export default function ProductDetail({ params }: PageProps) {
                                             {/* Total Earning */}
                                             <div className="flex items-center justify-between py-2 mb-3">
                                                 <span className="text-sm font-bold text-[#EE4D37]">Total Earning</span>
-                                                <span className="text-sm font-bold text-[#EE4D37]">₹{totalEarning.toLocaleString()} <span className="text-xs opacity-80 font-normal">({p.commission}%)</span></span>
+                                                <span className="text-sm font-bold text-[#EE4D37]">₹{totalEarning.toLocaleString()} <span className="text-xs opacity-80 font-normal">({totalCommPercent}%)</span></span>
                                             </div>
 
                                             {/* CTA */}
@@ -180,12 +181,7 @@ export default function ProductDetail({ params }: PageProps) {
                                         <td className="py-2.5 pr-4 text-gray-500 font-medium">Category</td>
                                         <td className="py-2.5 text-gray-900">{product.category}</td>
                                     </tr>
-                                    <tr>
-                                        <td className="py-2.5 pr-4 text-gray-500 font-medium">Last Updated</td>
-                                        <td className="py-2.5 text-gray-900">
-                                            {new Date(product.lastUpdated).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}
-                                        </td>
-                                    </tr>
+
                                 </tbody>
                             </table>
                         </div>

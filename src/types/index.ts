@@ -1,10 +1,9 @@
 export type Platform = 'Amazon' | 'Flipkart' | 'Meesho';
 
-export type Brand = 'HUL' | 'P&G' | "L'Oréal";
-
 export interface PlatformCommission {
   platform: Platform;
-  commission: number; // percentage
+  commission: number; // platform commission percentage
+  extraCommission: number; // extra commission percentage
   price: number; // platform-specific price
   link: string;
 }
@@ -12,15 +11,13 @@ export interface PlatformCommission {
 export interface Product {
   id: string;
   name: string;
-  brand: Brand;
+  brand: string;
   category: string;
   description: string;
   imageUrl: string;
-  lastUpdated: string; // ISO date string
   platforms: PlatformCommission[];
-  trending?: boolean;
 }
 
-export type QuickFilter = 'highest' | 'recent' | 'above10' | 'trending';
+export type QuickFilter = 'highest' | 'above10';
 
 export type ViewMode = 'all' | Platform;
